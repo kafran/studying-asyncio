@@ -12,7 +12,7 @@ def threaded(sync_q):
             sync_q.task_done()
 
 
-async def async_coro1(async_q):
+async def async_worker(name, async_q):
     for i in range(10):
         await async_q.put(f"Coro 1: {i}")
         await asyncio.sleep(1)
@@ -24,7 +24,11 @@ async def main():
     q2 = asyncio.Queue()
 
     for i in range(30):
-        q2.put_no
+        q2.put_nowait(i + 1)
+
+    tasks = []
+    for i in range(2):
+        task = asyncio.create_task()
 
     # done, pending = await asyncio.wait()
     # if not pending:
